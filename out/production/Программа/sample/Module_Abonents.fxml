@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="535.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ModuleAbonents">
+   <children>
+      <Label layoutX="127.0" layoutY="25.0" text="Абоненты ТНС">
+         <font>
+            <Font name="Times New Roman" size="24.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="userComboB" layoutX="401.0" layoutY="26.0" prefHeight="25.0" prefWidth="165.0" promptText="ФИО_Пользователя" style="-fx-background-color: lightgray;" />
+      <ImageView fitHeight="39.0" fitWidth="46.0" layoutX="575.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" />
+      <TableView fx:id="mainTableView" layoutX="118.0" layoutY="110.0" prefHeight="382.0" prefWidth="465.0">
+        <columns>
+          <TableColumn fx:id="numColumn" prefWidth="93.0" text="Номер" />
+          <TableColumn fx:id="FIOColumn" prefWidth="93.0" text="ФИО" />
+            <TableColumn fx:id="abonentsNumberColumn" prefWidth="93.0" text="Абоненский&#10;номер" />
+            <TableColumn fx:id="LSColumn" prefWidth="93.0" text="Лицевой счет" />
+            <TableColumn fx:id="servicesColumn" prefWidth="93.0" text="Услуги" />
+        </columns>
+      </TableView>
+      <AnchorPane fx:id="imgPane" layoutY="-4.0" maxWidth="107.0" prefHeight="558.0" prefWidth="107.0" style="visibility: true; -fx-border-color: gray; -fx-border-width: 2;">
+         <children>
+            <ImageView fitHeight="84.0" fitWidth="100.0" layoutX="1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/logo.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="utilityImg" fitHeight="57.0" fitWidth="90.0" layoutX="28.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/utility.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="activesImg" fitHeight="57.0" fitWidth="90.0" layoutX="35.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/actives.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="billingImg" fitHeight="57.0" fitWidth="90.0" layoutX="32.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/billing.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="userhelpImg" fitHeight="45.0" fitWidth="90.0" layoutX="30.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/userhelp.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="CRMImg" fitHeight="45.0" fitWidth="90.0" layoutX="31.0" layoutY="396.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/CRM.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="profileLabel1" alignment="CENTER" layoutX="32.0" layoutY="457.0" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: lightgray; -fx-background-radius: 90;" text="проф." textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="QALabel1" alignment="CENTER" layoutX="31.0" layoutY="505.0" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: lightgray; -fx-background-radius: 120;" text="?" textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="abonentsImg" fitHeight="57.0" fitWidth="81.0" layoutX="12.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/abonents.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="textPane" layoutY="-4.0" maxWidth="107.0" prefHeight="558.0" prefWidth="107.0" style="-fx-border-color: gray; -fx-border-width: 2; visibility: false;">
+         <children>
+            <ImageView fitHeight="84.0" fitWidth="100.0" layoutX="1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/logo.jpg" />
+               </image>
+            </ImageView>
+            <Label fx:id="utilityLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="147.0" prefHeight="39.0" prefWidth="90.0" style="-fx-background-color: lightgray;" text="Управление&#10;оборудованием" textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="activesLabel" alignment="CENTER" layoutX="8.0" layoutY="195.0" prefHeight="39.0" prefWidth="90.0" style="-fx-background-color: lightgray;" text="Активы" textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="usersHelpLabel" alignment="CENTER" layoutX="9.0" layoutY="293.0" prefHeight="39.0" prefWidth="90.0" style="-fx-background-color: lightgray;" text="Поддержка &#10;пользователей" textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="billingLabel" alignment="CENTER" layoutX="8.0" layoutY="244.0" prefHeight="39.0" prefWidth="90.0" style="-fx-background-color: lightgray;" text="Биллинг" textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="CRMLabel" alignment="CENTER" layoutX="10.0" layoutY="341.0" prefHeight="39.0" prefWidth="90.0" style="-fx-background-color: lightgray;" text="CRM" textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="profileLabel" alignment="CENTER" layoutX="31.0" layoutY="442.0" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: lightgray; -fx-background-radius: 90;" text="проф." textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="QALabel" alignment="CENTER" layoutX="31.0" layoutY="487.0" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: lightgray; -fx-background-radius: 120;" text="?" textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="abonentsLabel" alignment="CENTER" layoutX="10.0" layoutY="100.0" prefHeight="39.0" prefWidth="90.0" style="-fx-background-color: lightgray;" text="Абоненты">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <CheckBox fx:id="activeCB" layoutX="118.0" layoutY="501.0" mnemonicParsing="false" style="-fx-background-radius: 90;" text="Активные">
+         <font>
+            <Font name="Times New Roman" size="18.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="notActiveCB" layoutX="274.0" layoutY="501.0" mnemonicParsing="false" text="Неактивные">
+         <font>
+            <Font name="Times New Roman" size="18.0" />
+         </font>
+      </CheckBox>
+      <Button fx:id="changeBtn" layoutX="448.0" layoutY="501.0" mnemonicParsing="false" text="тык" />
+      <Button fx:id="changeBtn1" layoutX="527.0" layoutY="501.0" mnemonicParsing="false" text="тык2" />
+   </children>
+</AnchorPane>
