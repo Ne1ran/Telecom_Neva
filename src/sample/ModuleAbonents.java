@@ -162,13 +162,13 @@ public class ModuleAbonents {
         ResultSet abonentSet = handler.getAbonentsFromDB();
         while (abonentSet.next()) {
             Abonent abonent = new Abonent();
-            abonent.setId(abonentSet.getString(1));
-            abonent.setFio(abonentSet.getString(2));
-            abonent.setContract_num(abonentSet.getString(13));
-            abonent.setPersonal_account(abonentSet.getString(17));
-            abonent.setServices1(abonentSet.getString(18) +
-                                abonentSet.getString(19) +
-                                abonentSet.getString(20));
+            abonent.setId(abonentSet.getString(AllConstants.AbonentsConsts.ID));
+            abonent.setFio(abonentSet.getString(AllConstants.AbonentsConsts.FIO));
+            abonent.setContract_num(abonentSet.getString(AllConstants.AbonentsConsts.CONTRACT_NUM));
+            abonent.setPersonal_account(abonentSet.getString(AllConstants.AbonentsConsts.PERSONAL_ACCOUNT));
+            abonent.setServices1(abonentSet.getString(AllConstants.AbonentsConsts.SERVICES1) + " " +
+                                abonentSet.getString(AllConstants.AbonentsConsts.SERVICES2) + " " +
+                                abonentSet.getString(AllConstants.AbonentsConsts.SERVICES3));
             list.add(abonent);
         }
         return list;
