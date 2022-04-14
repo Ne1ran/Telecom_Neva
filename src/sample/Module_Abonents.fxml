@@ -6,86 +6,208 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="535.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ModuleAbonents">
+<AnchorPane prefHeight="535.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ModuleAbonents">
    <children>
-      <Label layoutX="127.0" layoutY="25.0" text="Абоненты ТНС">
+      <ComboBox fx:id="userComboB" layoutX="433.0" layoutY="27.0" prefHeight="25.0" prefWidth="159.0" promptText="ФИО_Пользователя" style="-fx-background-color: lightgray;" />
+      <ImageView fitHeight="35.0" fitWidth="29.0" layoutX="597.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="openedLabel" layoutX="115.0" layoutY="26.0" text="Абоненты ТНС">
          <font>
             <Font name="Times New Roman" size="24.0" />
          </font>
       </Label>
-      <ComboBox fx:id="userComboB" layoutX="401.0" layoutY="26.0" prefHeight="25.0" prefWidth="165.0" promptText="ФИО_Пользователя" style="-fx-background-color: lightgray;" />
-      <ImageView fitHeight="39.0" fitWidth="46.0" layoutX="575.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" />
-      <TableView fx:id="mainTableView" layoutX="118.0" layoutY="110.0" prefHeight="382.0" prefWidth="465.0">
-        <columns>
-          <TableColumn fx:id="numColumn" prefWidth="93.0" text="Номер" />
-          <TableColumn fx:id="FIOColumn" prefWidth="93.0" text="ФИО" />
-            <TableColumn fx:id="abonentsNumberColumn" prefWidth="93.0" text="Абоненский&#10;номер" />
-            <TableColumn fx:id="LSColumn" prefWidth="93.0" text="Лицевой счет" />
-            <TableColumn fx:id="servicesColumn" prefWidth="93.0" text="Услуги" />
-        </columns>
-      </TableView>
-      <AnchorPane fx:id="imgPane" layoutY="-4.0" maxWidth="107.0" prefHeight="558.0" prefWidth="107.0" style="visibility: true; -fx-border-color: gray; -fx-border-width: 2;">
+      <AnchorPane fx:id="CRMPane" layoutX="123.0" layoutY="58.0" prefHeight="474.0" prefWidth="488.0" style="visibility: false;">
          <children>
-            <ImageView fitHeight="84.0" fitWidth="100.0" layoutX="1.0" pickOnBounds="true" preserveRatio="true">
+            <TextField fx:id="abonentsNum" layoutX="14.0" layoutY="24.0" promptText="Номер абонента">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="abonentsSurname" layoutX="299.0" layoutY="24.0" promptText="Фамилия абонента">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </TextField>
+            <Button fx:id="searchAbonent" layoutX="216.0" layoutY="24.0" mnemonicParsing="false" text="Найти">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Button>
+            <AnchorPane fx:id="CRM_AskPane" layoutX="14.0" layoutY="75.0" prefHeight="382.0" prefWidth="465.0" style="visibility: false;">
+               <children>
+                  <TextField fx:id="serviceTypeField" layoutX="290.0" layoutY="114.0" promptText="Вид услуги">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="abonentsLSField" layoutX="290.0" layoutY="72.0" promptText="Лицевой счет абонента">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="abonentsNumFieldGen" layoutY="72.0" promptText="Номер абонента">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="askCreationTimeField" layoutX="290.0" layoutY="26.0" promptText="Дата создания">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="askNumField" layoutY="26.0" promptText="Номер заявки">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="servicesType2Field" layoutY="157.0" promptText="Тип услуги">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="techTypeField" layoutY="198.0" promptText="Тип оборудования">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="problemTypeField" layoutX="290.0" layoutY="198.0" promptText="Тип проблемы">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="problemInfoField" layoutY="242.0" prefHeight="26.0" prefWidth="175.0" promptText="Описание проблемы">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="askCloseDateField" layoutX="290.0" layoutY="242.0" prefHeight="26.0" prefWidth="175.0" promptText="Дата закрытия">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <ComboBox fx:id="serviceCBox" layoutY="115.0" prefHeight="25.0" prefWidth="175.0" promptText="Услуга" />
+                  <ComboBox fx:id="serviceStatusCBox" layoutX="290.0" layoutY="158.0" prefHeight="25.0" prefWidth="175.0" promptText="Статус" />
+                  <Button fx:id="setAskBtn" layoutX="175.0" layoutY="303.0" mnemonicParsing="false" text="Оставить заявку">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="abonentsPane" layoutX="123.0" layoutY="58.0" prefHeight="474.0" prefWidth="488.0" style="visibility: true;">
+         <children>
+            <TableView fx:id="mainTableView" layoutX="14.0" layoutY="49.0" prefHeight="271.0" prefWidth="457.0">
+               <columns>
+                  <TableColumn fx:id="numColumn" prefWidth="93.0" text="Номер" />
+                  <TableColumn fx:id="FIOColumn" prefWidth="93.0" text="ФИО" />
+                  <TableColumn fx:id="abonentsNumberColumn" prefWidth="93.0" text="Абонентский&#10;номер" />
+                  <TableColumn fx:id="LSColumn" prefWidth="93.0" text="Лицевой счет" />
+                  <TableColumn fx:id="servicesColumn" prefWidth="93.0" text="Услуги" />
+               </columns>
+            </TableView>
+            <CheckBox fx:id="notActiveCB" layoutX="344.0" layoutY="329.0" mnemonicParsing="false" text="Неактивные">
+               <font>
+                  <Font name="Times New Roman" size="18.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="activeCB" layoutX="14.0" layoutY="329.0" mnemonicParsing="false" style="-fx-background-radius: 90;" text="Активные">
+               <font>
+                  <Font name="Times New Roman" size="18.0" />
+               </font>
+            </CheckBox>
+            <Label alignment="CENTER" layoutX="167.0" layoutY="365.0" prefHeight="20.0" prefWidth="127.0" text="Поиск абонента" textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="searchAbonentsSurname" layoutX="70.0" layoutY="394.0" prefHeight="26.0" prefWidth="116.0" promptText="Фамилия">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="searchAbonentsLS" layoutX="70.0" layoutY="435.0" prefHeight="26.0" prefWidth="116.0" promptText="Лицевой счет">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </TextField>
+            <ComboBox fx:id="searchDistrictCB" layoutX="273.0" layoutY="395.0" prefWidth="150.0" promptText="Район" />
+            <ComboBox fx:id="searchStreetCB" layoutX="273.0" layoutY="435.0" prefWidth="150.0" promptText="Улица" />
+            <Button fx:id="searchAbonentBtn" layoutX="203.0" layoutY="435.0" mnemonicParsing="false" text="Поиск">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="imgPane" layoutY="-4.0" maxWidth="107.0" prefHeight="558.0" prefWidth="60.0" style="visibility: false; -fx-border-color: gray; -fx-border-width: 2;">
+         <children>
+            <ImageView fitHeight="52.0" fitWidth="42.0" layoutX="11.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/logo.jpg" />
                </image>
             </ImageView>
-            <ImageView fx:id="utilityImg" fitHeight="57.0" fitWidth="90.0" layoutX="28.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="utilityImg" fitHeight="57.0" fitWidth="42.0" layoutX="11.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/utility.jpg" />
                </image>
             </ImageView>
-            <ImageView fx:id="activesImg" fitHeight="57.0" fitWidth="90.0" layoutX="35.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="activesImg" fitHeight="57.0" fitWidth="42.0" layoutX="11.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/actives.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="billingImg" fitHeight="57.0" fitWidth="90.0" layoutX="32.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="billingImg" fitHeight="57.0" fitWidth="42.0" layoutX="11.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/billing.jpg" />
                </image>
             </ImageView>
-            <ImageView fx:id="userhelpImg" fitHeight="45.0" fitWidth="90.0" layoutX="30.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="userhelpImg" fitHeight="39.0" fitWidth="42.0" layoutX="11.0" layoutY="295.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/userhelp.jpg" />
                </image>
             </ImageView>
-            <ImageView fx:id="CRMImg" fitHeight="45.0" fitWidth="90.0" layoutX="31.0" layoutY="396.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="CRMImg" fitHeight="39.0" fitWidth="42.0" layoutX="11.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/CRM.png" />
                </image>
             </ImageView>
-            <Label fx:id="profileLabel1" alignment="CENTER" layoutX="32.0" layoutY="457.0" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: lightgray; -fx-background-radius: 90;" text="проф." textAlignment="CENTER">
+            <Label fx:id="profileLabel1" alignment="CENTER" layoutX="10.0" layoutY="389.0" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: lightgray; -fx-background-radius: 90;" text="проф." textAlignment="CENTER">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="QALabel1" alignment="CENTER" layoutX="31.0" layoutY="505.0" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: lightgray; -fx-background-radius: 120;" text="?" textAlignment="CENTER">
+            <Label fx:id="QALabel1" alignment="CENTER" layoutX="10.0" layoutY="450.0" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: lightgray; -fx-background-radius: 120;" text="?" textAlignment="CENTER">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </Label>
-            <ImageView fx:id="abonentsImg" fitHeight="57.0" fitWidth="81.0" layoutX="12.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="abonentsImg" fitHeight="45.0" fitWidth="42.0" layoutX="11.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/abonents.png" />
                </image>
             </ImageView>
+            <Button fx:id="changeBtn1" layoutX="3.0" layoutY="500.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="53.0" text="Изменить&#10;размер&#10;меню" textAlignment="CENTER">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="textPane" layoutY="-4.0" maxWidth="107.0" prefHeight="558.0" prefWidth="107.0" style="-fx-border-color: gray; -fx-border-width: 2; visibility: false;">
+      <AnchorPane fx:id="textPane" layoutY="-4.0" maxWidth="107.0" prefHeight="558.0" prefWidth="107.0" style="-fx-border-color: gray; -fx-border-width: 2; visibility: true;">
          <children>
-            <ImageView fitHeight="84.0" fitWidth="100.0" layoutX="1.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="84.0" fitWidth="100.0" layoutX="3.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/logo.jpg" />
                </image>
             </ImageView>
-            <Label fx:id="utilityLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="147.0" prefHeight="39.0" prefWidth="90.0" style="-fx-background-color: lightgray;" text="Управление&#10;оборудованием" textAlignment="CENTER">
+            <Label fx:id="utilityLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="147.0" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: lightgray;" text="Управление&#10;оборудованием" textAlignment="CENTER">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
@@ -105,17 +227,17 @@
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="CRMLabel" alignment="CENTER" layoutX="10.0" layoutY="341.0" prefHeight="39.0" prefWidth="90.0" style="-fx-background-color: lightgray;" text="CRM" textAlignment="CENTER">
+            <Label fx:id="CRMLabel" alignment="CENTER" layoutX="10.0" layoutY="342.0" prefHeight="39.0" prefWidth="90.0" style="-fx-background-color: lightgray;" text="CRM" textAlignment="CENTER">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="profileLabel" alignment="CENTER" layoutX="31.0" layoutY="442.0" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: lightgray; -fx-background-radius: 90;" text="проф." textAlignment="CENTER">
+            <Label fx:id="profileLabel" alignment="CENTER" layoutX="31.0" layoutY="395.0" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: lightgray; -fx-background-radius: 90;" text="проф." textAlignment="CENTER">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="QALabel" alignment="CENTER" layoutX="31.0" layoutY="487.0" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: lightgray; -fx-background-radius: 120;" text="?" textAlignment="CENTER">
+            <Label fx:id="QALabel" alignment="CENTER" layoutX="31.0" layoutY="442.0" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: lightgray; -fx-background-radius: 120;" text="?" textAlignment="CENTER">
                <font>
                   <Font name="Times New Roman" size="14.0" />
                </font>
@@ -125,19 +247,151 @@
                   <Font name="Times New Roman" size="14.0" />
                </font>
             </Label>
+            <Button fx:id="changeBtn" layoutX="24.0" layoutY="492.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="53.0" text="Изменить&#10;размер&#10;меню" textAlignment="CENTER">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
-      <CheckBox fx:id="activeCB" layoutX="118.0" layoutY="501.0" mnemonicParsing="false" style="-fx-background-radius: 90;" text="Активные">
-         <font>
-            <Font name="Times New Roman" size="18.0" />
-         </font>
-      </CheckBox>
-      <CheckBox fx:id="notActiveCB" layoutX="274.0" layoutY="501.0" mnemonicParsing="false" text="Неактивные">
-         <font>
-            <Font name="Times New Roman" size="18.0" />
-         </font>
-      </CheckBox>
-      <Button fx:id="changeBtn" layoutX="448.0" layoutY="501.0" mnemonicParsing="false" text="тык" />
-      <Button fx:id="changeBtn1" layoutX="527.0" layoutY="501.0" mnemonicParsing="false" text="тык2" />
+      <AnchorPane fx:id="utilityPane" layoutX="123.0" layoutY="58.0" prefHeight="474.0" prefWidth="488.0" style="visibility: false;">
+         <children>
+            <ComboBox fx:id="OMSCBox" layoutX="14.0" layoutY="14.0" prefHeight="28.0" prefWidth="258.0" promptText="Оборудование магистральных сетей" />
+            <ComboBox fx:id="OSDCBox" layoutX="14.0" layoutY="169.0" prefHeight="28.0" prefWidth="258.0" promptText="Оборудование сетей доступа" />
+            <ComboBox fx:id="OACBox" layoutX="14.0" layoutY="323.0" prefHeight="28.0" prefWidth="258.0" promptText="Оборудование абонента" />
+            <Button fx:id="addOMC" layoutX="14.0" layoutY="64.0" mnemonicParsing="false" text="Добавить ОМС">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="addOA" layoutX="14.0" layoutY="371.0" mnemonicParsing="false" text="Добавить ОА">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="addOSD" layoutX="14.0" layoutY="217.0" mnemonicParsing="false" text="Добавить ОСД">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Button>
+            <AnchorPane fx:id="OMCAddPane" layoutX="282.0" prefHeight="474.0" prefWidth="206.0" style="visibility: false;">
+               <children>
+                  <TextField fx:id="techNameOMC" layoutX="16.0" layoutY="14.0" promptText="Название">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="techRate" layoutX="16.0" layoutY="59.0" promptText="Частота">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="techCoefficient" layoutX="16.0" layoutY="102.0" promptText="Коэффициент затухания">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="techDataTransfer" layoutX="7.0" layoutY="151.0" prefHeight="26.0" prefWidth="193.0" promptText="Технология передачи данных">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="techWhereOMC" layoutX="16.0" layoutY="197.0" prefHeight="122.0" prefWidth="175.0" promptText="Расположение">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="addTechOMC" layoutX="66.0" layoutY="339.0" mnemonicParsing="false" text="Добавить">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="OSDAddPane" layoutX="282.0" prefHeight="474.0" prefWidth="206.0" style="visibility: false;">
+               <children>
+                  <TextField fx:id="techNameOSD" layoutX="16.0" layoutY="14.0" promptText="Название">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="techPortsOSD" layoutX="16.0" layoutY="59.0" promptText="Количество портов">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="techDTStandart" layoutX="7.0" layoutY="102.0" prefHeight="26.0" prefWidth="193.0" promptText="Стандарт передачи данных">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="techRateOSD" layoutX="16.0" layoutY="144.0" prefHeight="26.0" prefWidth="175.0" promptText="Частота">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="techWhereOSD" layoutX="16.0" layoutY="280.0" prefHeight="122.0" prefWidth="175.0" promptText="Месторасположение">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="addTechOSD" layoutX="66.0" layoutY="434.0" mnemonicParsing="false" text="Добавить">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="techInterfaces" layoutX="16.0" layoutY="189.0" prefHeight="26.0" prefWidth="175.0" promptText="Интерфейсы">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="DTSpeedOSD" layoutX="7.0" layoutY="230.0" prefHeight="26.0" prefWidth="193.0" promptText="Скорость передачи данных">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="OAAddPane" layoutX="282.0" prefHeight="474.0" prefWidth="206.0" style="visibility: false;">
+               <children>
+                  <TextField fx:id="techNameOA" layoutX="16.0" layoutY="14.0" promptText="Название">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="techPortsOA" layoutX="16.0" layoutY="59.0" promptText="Количество портов">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="techDTStandartOA" layoutX="7.0" layoutY="102.0" prefHeight="26.0" prefWidth="193.0" promptText="Стандарт передачи данных">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="techDataTransferOA" layoutX="7.0" layoutY="142.0" prefHeight="26.0" prefWidth="193.0" promptText="Скорость передачи данных">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="techWhereOA" layoutX="16.0" layoutY="197.0" prefHeight="122.0" prefWidth="175.0" promptText="Адрес абонента">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="addTechOA" layoutX="66.0" layoutY="339.0" mnemonicParsing="false" text="Добавить">
+                     <font>
+                        <Font name="Times New Roman" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <Button fx:id="openCalcApp" alignment="CENTER" layoutX="56.0" layoutY="409.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="175.0" text="Открыть приложение по &#10;рассчету покрытия" textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

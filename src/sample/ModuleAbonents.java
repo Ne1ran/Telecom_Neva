@@ -2,8 +2,6 @@ package sample;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -16,70 +14,428 @@ import java.sql.SQLException;
 public class ModuleAbonents {
 
     @FXML
-    private Label CRMLabel;
-    @FXML
-    private TableColumn<Abonent, String> FIOColumn;
-    @FXML
-    private TableColumn<Abonent, String> LSColumn;
-    @FXML
-    private Label QALabel;
-    @FXML
-    private TableColumn<Abonent, String> abonentsNumberColumn;
-    @FXML
-    private CheckBox activeCB;
-    @FXML
-    private Label activesLabel;
-    @FXML
-    private Label billingLabel;
-    @FXML
-    private TableView<Abonent> mainTableView;
-    @FXML
-    private CheckBox notActiveCB;
-    @FXML
-    private Label profileLabel;
-    @FXML
-    private TableColumn<Abonent, String> servicesColumn;
-    @FXML
-    private ComboBox<?> userComboB;
-    @FXML
-    private Label usersHelpLabel;
-    @FXML
-    private Label utilityLabel;
-    @FXML
-    private Label abonentsLabel;
-    @FXML
-    private TableColumn<Abonent, String> numColumn;
-    @FXML
-    private AnchorPane imgPane;
-    @FXML
-    private Button changeBtn;
-    @FXML
-    private Button changeBtn1;
-    @FXML
-    private AnchorPane textPane;
-    @FXML
-    private ImageView abonentsImg;
-    @FXML
-    private ImageView utilityImg;
-    @FXML
-    private ImageView activesImg;
-    @FXML
-    private ImageView billingImg;
-    @FXML
-    private ImageView userhelpImg;
-    @FXML
     private ImageView CRMImg;
 
+    @FXML
+    private Label CRMLabel;
 
     @FXML
-    void initialize() throws SQLException, ClassNotFoundException {
-        loadTable();
-        loadAbonents();
+    private AnchorPane CRMPane;
 
-        CRMLabel.setOnMouseClicked(ActionEvent -> {
-            System.out.println("Вы нажали на CRM!");
+    @FXML
+    private AnchorPane CRM_AskPane;
+
+    @FXML
+    private TextField DTSpeedOSD;
+
+    @FXML
+    private TableColumn<Abonent, String> FIOColumn;
+
+    @FXML
+    private TableColumn<Abonent, String> LSColumn;
+
+    @FXML
+    private AnchorPane OAAddPane;
+
+    @FXML
+    private ComboBox<String> OACBox;
+
+    @FXML
+    private AnchorPane OMCAddPane;
+
+    @FXML
+    private ComboBox<String> OMSCBox;
+
+    @FXML
+    private AnchorPane OSDAddPane;
+
+    @FXML
+    private ComboBox<String> OSDCBox;
+
+    @FXML
+    private Label QALabel;
+
+    @FXML
+    private Label QALabel1;
+
+    @FXML
+    private ImageView abonentsImg;
+
+    @FXML
+    private TextField abonentsLSField;
+
+    @FXML
+    private Label abonentsLabel;
+
+    @FXML
+    private TextField abonentsNum;
+
+    @FXML
+    private TextField abonentsNumFieldGen;
+
+    @FXML
+    private TableColumn<Abonent, String> abonentsNumberColumn;
+
+    @FXML
+    private AnchorPane abonentsPane;
+
+    @FXML
+    private TextField abonentsSurname;
+
+    @FXML
+    private CheckBox activeCB;
+
+    @FXML
+    private ImageView activesImg;
+
+    @FXML
+    private Label activesLabel;
+
+    @FXML
+    private Button addOA;
+
+    @FXML
+    private Button addOMC;
+
+    @FXML
+    private Button addOSD;
+
+    @FXML
+    private Button addTechOA;
+
+    @FXML
+    private Button addTechOMC;
+
+    @FXML
+    private Button addTechOSD;
+
+    @FXML
+    private TextField askCloseDateField;
+
+    @FXML
+    private TextField askCreationTimeField;
+
+    @FXML
+    private TextField askNumField;
+
+    @FXML
+    private ImageView billingImg;
+
+    @FXML
+    private Label billingLabel;
+
+    @FXML
+    private Button changeBtn;
+
+    @FXML
+    private Button changeBtn1;
+
+    @FXML
+    private AnchorPane imgPane;
+
+    @FXML
+    private TableView<Abonent> mainTableView;
+
+    @FXML
+    private CheckBox notActiveCB;
+
+    @FXML
+    private TableColumn<Abonent, String> numColumn;
+
+    @FXML
+    private Button openCalcApp;
+
+    @FXML
+    private Label openedLabel;
+
+    @FXML
+    private TextField problemInfoField;
+
+    @FXML
+    private TextField problemTypeField;
+
+    @FXML
+    private Label profileLabel;
+
+    @FXML
+    private Label profileLabel1;
+
+    @FXML
+    private Button searchAbonentBtn;
+
+    @FXML
+    private Button searchAbonent;
+
+    @FXML
+    private TextField searchAbonentsLS;
+
+    @FXML
+    private TextField searchAbonentsSurname;
+
+    @FXML
+    private ComboBox<String> searchDistrictCB;
+
+    @FXML
+    private ComboBox<String> searchStreetCB;
+
+    @FXML
+    private ComboBox<String> serviceCBox;
+
+    @FXML
+    private ComboBox<String> serviceStatusCBox;
+
+    @FXML
+    private TextField serviceTypeField;
+
+    @FXML
+    private TableColumn<Abonent, String> servicesColumn;
+
+    @FXML
+    private TextField servicesType2Field;
+
+    @FXML
+    private Button setAskBtn;
+
+    @FXML
+    private TextField techCoefficient;
+
+    @FXML
+    private TextField techDTStandart;
+
+    @FXML
+    private TextField techDTStandartOA;
+
+    @FXML
+    private TextField techDataTransfer;
+
+    @FXML
+    private TextField techDataTransferOA;
+
+    @FXML
+    private TextField techInterfaces;
+
+    @FXML
+    private TextField techNameOA;
+
+    @FXML
+    private TextField techNameOMC;
+
+    @FXML
+    private TextField techNameOSD;
+
+    @FXML
+    private TextField techPortsOA;
+
+    @FXML
+    private TextField techPortsOSD;
+
+    @FXML
+    private TextField techRate;
+
+    @FXML
+    private TextField techRateOSD;
+
+    @FXML
+    private TextField techTypeField;
+
+    @FXML
+    private TextField techWhereOA;
+
+    @FXML
+    private TextField techWhereOMC;
+
+    @FXML
+    private TextField techWhereOSD;
+
+    @FXML
+    private AnchorPane textPane;
+
+    @FXML
+    private ComboBox<String> userComboB;
+
+    @FXML
+    private ImageView userhelpImg;
+
+    @FXML
+    private Label usersHelpLabel;
+
+    @FXML
+    private ImageView utilityImg;
+
+    @FXML
+    private Label utilityLabel;
+
+    @FXML
+    private AnchorPane utilityPane;
+
+    @FXML    void initialize() throws SQLException, ClassNotFoundException {
+        //loadTable();
+        //loadAbonents();
+        ObservableList<String> services = FXCollections.observableArrayList("Интернет","Мобильная связь", "Телевидение", "Видеонаблюдение");
+        ObservableList<String> servicesStatus = FXCollections.observableArrayList("Новая","Требует выезда", "Закрыта");
+        ObservableList<String> users = FXCollections.observableArrayList("Новая","Требует выезда", "Закрыта");
+        ObservableList<String> districts = FXCollections.observableArrayList("Василеостровский","Петроградский","Адмиралтейский");
+
+        userComboB.setItems(users);
+        searchDistrictCB.setItems(districts);
+
+        //Лейбл абонентов
+        abonentsLabel.setOnMouseClicked(ActionEvent -> {
+            abonentsOpen();
         });
 
+        //Лейбл оборудования
+        utilityLabel.setOnMouseClicked(ActionEvent ->{
+            utilityOpen();
+        });
+
+        //Лейбл для окна CRM
+        CRMLabel.setOnMouseClicked(ActionEvent -> {
+            CRMOpen();
+        });
+
+        //Изображение для абонентов
+        abonentsImg.setOnMouseClicked(ActionEvent -> {
+            abonentsOpen();
+        });
+
+        //Изображение для оборудования
+        utilityImg.setOnMouseClicked(ActionEvent -> {
+            utilityOpen();
+        });
+
+        //Изображение для CRM
+        CRMImg.setOnMouseClicked(ActionEvent -> {
+            CRMOpen();
+        });
+
+        //Производится выбор услуги в CRM
+        serviceCBox.setOnAction(ActionEvent ->{
+            System.out.println("Выбор");
+        });
+
+        //Сортировка по активным абонентам
+        activeCB.setOnAction(ActionEvent ->{
+            if (activeCB.isSelected()){
+                System.out.println("Выбрана сортировка тока активных юзеров");
+            } else System.out.println("Отключена");
+            if (activeCB.isSelected() && notActiveCB.isSelected()){
+                System.out.println("А чего оба выбраны???");
+            }
+        });
+
+        //Сортировка по неактивным абонентам
+        notActiveCB.setOnAction(ActionEvent ->{
+            if (notActiveCB.isSelected()) {
+                System.out.println("Выбрана сортировка тока неактивных юзеров");
+            } else System.out.println("Отключена сорт неактив");
+            if (activeCB.isSelected() && notActiveCB.isSelected()){
+                System.out.println("А чего оба выбраны???");
+            }
+        });
+
+        //Кнопка поиска абонента для заявки для CRM
+        searchAbonent.setOnAction(ActionEvent ->{
+            Abonent abonent = new Abonent();
+            abonent.setNumber(abonentsNum.getText().trim());
+            abonent.setFio(abonentsSurname.getText().trim());
+            //BD
+        });
+
+        //Открытие приложения для расчетов
+        openCalcApp.setOnAction(ActionEvent ->{
+            System.out.println("Вы пытаетесь открыть приложение для расчетов");
+        });
+
+
+        //Кнопка поиска абонента на окне абонентов
+        searchAbonentBtn.setOnAction(ActionEvent ->{
+            System.out.println("Нажата кнопка поиска пользователя!");
+            Abonent abonent = new Abonent();
+            abonent.setPersonal_account(searchAbonentsLS.getText().trim());
+            abonent.setFio(searchAbonentsSurname.getText().trim());
+            abonent.setAddresspspt(searchDistrictCB.getValue() + searchStreetCB.getValue());
+            //BD
+        });
+
+        //Кнопка оставления заявки
+        setAskBtn.setOnAction(ActionEvent ->{
+            System.out.println("Вы оставили заявку!");
+        });
+
+        //Кнопка для схлопывания для лейблов->image
+        changeBtn.setOnAction(Event -> {
+            imgPane.setVisible(true);
+            textPane.setVisible(false);
+        });
+
+        //Кнопка для схлопывания для изображений->label
+        changeBtn1.setOnAction(Event -> {
+            imgPane.setVisible(false);
+            textPane.setVisible(true);
+        });
+
+        //Кнопка включение добавления оборудования абонента
+        addOA.setOnAction(ActionEvent ->{
+            OAAddPane.setVisible(true);
+            OMCAddPane.setVisible(false);
+            OSDAddPane.setVisible(false);
+        });
+
+        //Кнопка включение добавления оборудования сетей доступа
+        addOSD.setOnAction(ActionEvent ->{
+            OAAddPane.setVisible(false);
+            OMCAddPane.setVisible(false);
+            OSDAddPane.setVisible(true);
+        });
+
+        //Кнопка включение добавления оборудования магистральных сетей
+        addOMC.setOnAction(ActionEvent ->{
+            OAAddPane.setVisible(false);
+            OMCAddPane.setVisible(true);
+            OSDAddPane.setVisible(false);
+        });
+
+        //Кнопка поиска абонента для окна CRM
+        searchAbonent.setOnAction(ActionEvent ->{
+            String abonentsNumber = abonentsNum.getText().trim();
+            String abonentsSecondName = abonentsSurname.getText().trim();
+
+            if (abonentsNumber.matches("123") && abonentsSecondName.matches("123")){
+                CRM_AskPane.setVisible(true);
+                System.out.println("Абонент найден!");
+                serviceCBox.setItems(services);
+                serviceStatusCBox.setItems(servicesStatus);
+            }
+        });
+
+        //Кнопки для добавления разного оборудования на utilityPane. Нужно дописать считывание данных для них.
+        //Добавить класс под оборудование.
+        addTechOA.setOnAction(ActionEvent ->{
+            System.out.println("Попытка добавить оборудование для абонента");
+        });
+        addTechOMC.setOnAction(ActionEvent ->{
+            System.out.println("Попытка добавить оборудование для магистральных сетей");
+        });
+        addTechOSD.setOnAction(ActionEvent ->{
+            System.out.println("Попытка добавить оборудование для сетей доступа");
+        });
+
+        //Возможно рабочий код, который что-то делает на даблклик в строку таблицы
+        mainTableView.setRowFactory( tv -> {
+            TableRow<Abonent> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                System.out.println("dbclicked");
+                if (event.getClickCount() == 2 ){ // && (!row.isEmpty())
+                    Abonent choosenAbonent = row.getItem();
+                    System.out.println(choosenAbonent.getNumber());
+                }
+            });
+            return row ;
+        });
+
+        //Бесполезные пока что картинки и лейблы
+        /*
         QALabel.setOnMouseClicked(ActionEvent -> {
             System.out.println("Вы нажали на QA!");
         });
@@ -100,21 +456,6 @@ public class ModuleAbonents {
             System.out.println("Вы нажали на помощь!");
         });
 
-        utilityLabel.setOnMouseClicked(ActionEvent -> {
-            System.out.println("Вы нажали на управление!");
-        });
-
-        abonentsLabel.setOnMouseClicked(ActionEvent -> {
-            System.out.println("Вы нажали на abonents!");
-        });
-
-        abonentsImg.setOnMouseClicked(ActionEvent -> {
-            System.out.println("Вы нажали на абонентов-картинку!");
-        });
-
-        utilityImg.setOnMouseClicked(ActionEvent -> {
-            System.out.println("Вы нажали на управление-картинку!");
-        });
 
         activesImg.setOnMouseClicked(ActionEvent -> {
             System.out.println("Вы нажали на активы-картинку!");
@@ -127,22 +468,36 @@ public class ModuleAbonents {
         userhelpImg.setOnMouseClicked(ActionEvent -> {
             System.out.println("Вы нажали на помощь-картинку!");
         });
-
-        CRMImg.setOnMouseClicked(ActionEvent -> {
-            System.out.println("Вы нажали на СРМ-картинку!");
-        });
-
-        changeBtn.setOnAction(Event -> {
-            imgPane.setVisible(true);
-            textPane.setVisible(false);
-        });
-
-        changeBtn1.setOnAction(Event -> {
-            imgPane.setVisible(false);
-            textPane.setVisible(true);
-        });
+        */
     }
 
+    //Метод для скрытия всех окон кроме оборудования и установления текста в лейбл
+    private void utilityOpen(){
+        utilityPane.setVisible(true);
+        abonentsPane.setVisible(false);
+        CRMPane.setVisible(false);
+        CRM_AskPane.setVisible(false);
+        openedLabel.setText("Управление оборудованием");
+    }
+
+    //Метод для скрытия всех окон кроме CRM и установления текста в лейбл
+    private void CRMOpen(){
+        CRMPane.setVisible(true);
+        abonentsPane.setVisible(false);
+        utilityPane.setVisible(false);
+        openedLabel.setText("CRM");
+    }
+
+    //Метод для скрытия всех окон абонентов утила и установления текста в лейбл
+    private void abonentsOpen(){
+        abonentsPane.setVisible(true);
+        CRMPane.setVisible(false);
+        CRM_AskPane.setVisible(false);
+        utilityPane.setVisible(false);
+        openedLabel.setText("Абоненты ТНС");
+    }
+
+    //Ниже все для бд
     private void loadTable() {
         numColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         FIOColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
@@ -167,8 +522,8 @@ public class ModuleAbonents {
             abonent.setContract_num(abonentSet.getString(AllConstants.AbonentsConsts.CONTRACT_NUM));
             abonent.setPersonal_account(abonentSet.getString(AllConstants.AbonentsConsts.PERSONAL_ACCOUNT));
             abonent.setServices1(abonentSet.getString(AllConstants.AbonentsConsts.SERVICES1) + " " +
-                                abonentSet.getString(AllConstants.AbonentsConsts.SERVICES2) + " " +
-                                abonentSet.getString(AllConstants.AbonentsConsts.SERVICES3));
+                    abonentSet.getString(AllConstants.AbonentsConsts.SERVICES2) + " " +
+                    abonentSet.getString(AllConstants.AbonentsConsts.SERVICES3));
             list.add(abonent);
         }
         return list;
