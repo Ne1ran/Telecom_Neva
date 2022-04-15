@@ -91,7 +91,11 @@ public class Controller {
         });
 
         codeField.setOnAction(ActionEvent ->{
-            System.out.println("Вы попытались войти через Enter!");
+            String code = codeField.getText().trim();
+            if (code.matches(codeGenerated)){
+                System.out.println("Код введен правильно!");
+                setScene("Module_Abonents.fxml");
+            } else System.out.println("Вы ввели неправильный код!");
         });
 
         refreshImgV.setOnMouseClicked(ActionEvent ->{

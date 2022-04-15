@@ -58,6 +58,35 @@ public class DBHandler extends Config{
         return rset;
     }
 
+    public ResultSet getActiveAbonentsFromDB() throws  SQLException, ClassNotFoundException{
+        ResultSet rset = null;
+        String select = "SELECT * FROM " + AllConstants.AbonentsConsts.ABONENTS_TABLE + " where `Дата расторжения договора` = ''";
+
+        PreparedStatement prst = getConnection().prepareStatement(select);
+        rset = prst.executeQuery();
+
+        return rset;
+    }
+
+    public ResultSet getNotActiveAbonentsFromDB() throws  SQLException, ClassNotFoundException{
+        ResultSet rset = null;
+        String select = "SELECT * FROM " + AllConstants.AbonentsConsts.ABONENTS_TABLE + " where `Дата расторжения договора` != ''";
+
+        PreparedStatement prst = getConnection().prepareStatement(select);
+        rset = prst.executeQuery();
+
+        return rset;
+    }
+    public ResultSet searchAbonent(String query) throws  SQLException, ClassNotFoundException{
+        ResultSet rset = null;
+        String select = "SELECT * FROM " + AllConstants.AbonentsConsts.ABONENTS_TABLE + " where " + query;
+
+        PreparedStatement prst = getConnection().prepareStatement(select);
+        rset = prst.executeQuery();
+
+        return rset;
+    }
+
     public ResultSet getUsersFromDB(String FIO) throws  SQLException, ClassNotFoundException{
         ResultSet rset = null;
         if (FIO.equals("")) {
@@ -74,4 +103,21 @@ public class DBHandler extends Config{
         }
     }
 
+    public ResultSet getStreetsFromDB() throws  SQLException, ClassNotFoundException{
+        ResultSet rset = null;
+        String select = "SELECT `Адрес прописки` FROM " + AllConstants.AbonentsConsts.ABONENTS_TABLE;
+        PreparedStatement prst = getConnection().prepareStatement(select);
+        rset = prst.executeQuery();
+        return rset;
+    }
+
+    public boolean checkAbonent(String num, String surname) throws SQLException, ClassNotFoundException{
+        ResultSet rset = null;
+        String select = "SELECT * FROM " + AllConstants.AbonentsConsts.ABONENTS_TABLE + " WHERE ФИО LIKE '"
+                + surname + "%' AND `Номер телефона` LIKE '%" + num + "%'" ;
+        System.out.println(select);
+        PreparedStatement prst = getConnection().prepareStatement(select);
+        rset = prst.executeQuery();
+        return rset.next();
+    }
 }

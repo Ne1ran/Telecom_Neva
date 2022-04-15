@@ -280,11 +280,13 @@ public class ModuleAbonents {
         loadUsersCB();
         loadTable();
         loadAbonents();
+        loadStreetsCB();
         ObservableList<String> services = FXCollections.observableArrayList("Интернет","Мобильная связь", "Телевидение", "Видеонаблюдение");
         ObservableList<String> servicesStatus = FXCollections.observableArrayList("Новая","Требует выезда", "Закрыта");
         ObservableList<String> districts = FXCollections.observableArrayList("Василеостровский","Петроградский","Адмиралтейский");
 
         searchDistrictCB.setItems(districts);
+
 
         userComboB.setOnAction(ActionEvent ->{
             String userPicked = userComboB.getValue();
@@ -363,30 +365,34 @@ public class ModuleAbonents {
 
         //Сортировка по активным абонентам
         activeCB.setOnAction(ActionEvent ->{
-            if (activeCB.isSelected()){
-                System.out.println("Выбрана сортировка тока активных юзеров");
-            } else System.out.println("Отключена");
-            if (activeCB.isSelected() && notActiveCB.isSelected()){
-                System.out.println("А чего оба выбраны???");
+            try {
+                if (activeCB.isSelected()) {
+                    loadActiveAbonents();
+                } else if (notActiveCB.isSelected()) {
+                    loadNotActiveAbonents();
+                } else loadAbonents();
+                if (activeCB.isSelected() && notActiveCB.isSelected()) {
+                    loadAbonents();
+                }
+            } catch (SQLException | ClassNotFoundException throwables) {
+                throwables.printStackTrace();
             }
         });
 
         //Сортировка по неактивным абонентам
         notActiveCB.setOnAction(ActionEvent ->{
-            if (notActiveCB.isSelected()) {
-                System.out.println("Выбрана сортировка тока неактивных юзеров");
-            } else System.out.println("Отключена сорт неактив");
-            if (activeCB.isSelected() && notActiveCB.isSelected()){
-                System.out.println("А чего оба выбраны???");
+            try {
+                if (notActiveCB.isSelected()) {
+                    loadNotActiveAbonents();
+                } else if (activeCB.isSelected()) {
+                    loadActiveAbonents();
+                    } else loadAbonents();
+                if (activeCB.isSelected() && notActiveCB.isSelected()){
+                    loadAbonents();
+                }
+            } catch (SQLException | ClassNotFoundException throwables) {
+                throwables.printStackTrace();
             }
-        });
-
-        //Кнопка поиска абонента для заявки для CRM
-        searchAbonent.setOnAction(ActionEvent ->{
-            Abonent abonent = new Abonent();
-            abonent.setNumber(abonentsNum.getText().trim());
-            abonent.setFio(abonentsSurname.getText().trim());
-            //BD
         });
 
         //Открытие приложения для расчетов
@@ -397,12 +403,33 @@ public class ModuleAbonents {
 
         //Кнопка поиска абонента на окне абонентов
         searchAbonentBtn.setOnAction(ActionEvent ->{
-            System.out.println("Нажата кнопка поиска пользователя!");
-            Abonent abonent = new Abonent();
-            abonent.setPersonal_account(searchAbonentsLS.getText().trim());
-            abonent.setFio(searchAbonentsSurname.getText().trim());
-            abonent.setAddresspspt(searchDistrictCB.getValue() + searchStreetCB.getValue());
-            //BD
+            String query = "";
+            try {
+                if (!searchAbonentsSurname.getText().equals("")) {
+                    query += AllConstants.AbonentsConsts.FIO + " LIKE '" + searchAbonentsSurname.getText().trim() + "%' AND ";
+                }
+                if (!searchAbonentsLS.getText().equals("")) {
+                    query += "`" + AllConstants.AbonentsConsts.PERSONAL_ACCOUNT + "`" + " LIKE '" + searchAbonentsLS.getText().trim() + "%' + AND";
+                    System.out.println(query);
+                }
+                if (searchDistrictCB.getValue() != null && searchStreetCB.getValue() != null) {
+                    query += "`" + AllConstants.AbonentsConsts.ADDRESSPSPT + "`" + " LIKE '%" + searchDistrictCB.getValue().trim() + ", " + searchStreetCB.getValue().trim() + "%' + AND";
+                } else {
+                    if (searchDistrictCB.getValue() != null) {
+                        query += "`" + AllConstants.AbonentsConsts.ADDRESSPSPT + "`" + " LIKE '%" + searchDistrictCB.getValue().trim() + "%' + AND";
+                    }
+                    if (searchStreetCB.getValue() != null) {
+                        query += "`" + AllConstants.AbonentsConsts.ADDRESSPSPT + "`" + " LIKE '%" + searchStreetCB.getValue().trim() + "%' + AND";
+                    }
+                }
+                if (query.substring(query.length() - 4).contains("AND")){
+                    query = query.substring(0, query.length()-5);
+                    System.out.println(query);
+                }
+                loadSearchAbonents(query);
+            } catch (SQLException | ClassNotFoundException throwables) {
+                throwables.printStackTrace();
+            }
         });
 
         //Кнопка оставления заявки
@@ -447,13 +474,25 @@ public class ModuleAbonents {
         searchAbonent.setOnAction(ActionEvent ->{
             String abonentsNumber = abonentsNum.getText().trim();
             String abonentsSecondName = abonentsSurname.getText().trim();
-
-            if (abonentsNumber.matches("123") && abonentsSecondName.matches("123")){
-                CRM_AskPane.setVisible(true);
-                System.out.println("Абонент найден!");
-                serviceCBox.setItems(services);
-                serviceStatusCBox.setItems(servicesStatus);
-            }
+            if (!(abonentsNumber.equals("") && abonentsSecondName.equals(""))){
+                try {
+                    if (handler.checkAbonent(abonentsNumber, abonentsSecondName)){
+                        CRM_AskPane.setVisible(true);
+                        System.out.println("Абонент найден!");
+                        serviceCBox.setItems(services);
+                        serviceStatusCBox.setItems(servicesStatus);
+                    }
+                } catch (SQLException | ClassNotFoundException throwables) {
+                    throwables.printStackTrace();
+                }
+                //Заглушка если бд не работает
+                if (abonentsNumber.matches("123") && abonentsSecondName.matches("123")){
+                    CRM_AskPane.setVisible(true);
+                    System.out.println("Абонент найден!");
+                    serviceCBox.setItems(services);
+                    serviceStatusCBox.setItems(servicesStatus);
+                }
+            } else System.out.println("Введите хотя бы какие-то данные!");
         });
 
         //Кнопки для добавления разного оборудования на utilityPane. Нужно дописать считывание данных для них.
@@ -557,6 +596,21 @@ public class ModuleAbonents {
         mainTableView.setItems(Abonents);
     }
 
+    private void loadActiveAbonents() throws SQLException, ClassNotFoundException {
+        ObservableList<Abonent> Abonents = getActiveAbonentsList();
+        mainTableView.setItems(Abonents);
+    }
+
+    private void loadNotActiveAbonents() throws SQLException, ClassNotFoundException {
+        ObservableList<Abonent> Abonents = getNotActiveAbonentsList();
+        mainTableView.setItems(Abonents);
+    }
+
+    private void loadSearchAbonents(String query) throws SQLException, ClassNotFoundException {
+        ObservableList<Abonent> Abonents = getSearchAbonentsList(query);
+        mainTableView.setItems(Abonents);
+    }
+
     private ObservableList<Abonent> getAbonentsList() throws SQLException, ClassNotFoundException {
         ObservableList<Abonent> list = FXCollections.observableArrayList();
         ResultSet abonentSet = handler.getAbonentsFromDB();
@@ -580,6 +634,63 @@ public class ModuleAbonents {
         userComboB.setItems(users);
     }
 
+    private void loadStreetsCB() throws SQLException, ClassNotFoundException {
+        ObservableList<String> streets = getStreetsCB();
+        searchStreetCB.setItems(streets);
+    }
+
+    private ObservableList<Abonent> getActiveAbonentsList() throws SQLException, ClassNotFoundException {
+        ObservableList<Abonent> list = FXCollections.observableArrayList();
+        ResultSet abonentSet = handler.getActiveAbonentsFromDB();
+        while (abonentSet.next()) {
+            Abonent abonent = new Abonent();
+            abonent.setId(abonentSet.getString(AllConstants.AbonentsConsts.ID));
+            abonent.setFio(abonentSet.getString(AllConstants.AbonentsConsts.FIO));
+            abonent.setContract_num(abonentSet.getString(AllConstants.AbonentsConsts.CONTRACT_NUM));
+            abonent.setPersonal_account(abonentSet.getString(AllConstants.AbonentsConsts.PERSONAL_ACCOUNT));
+            abonent.setServices1(abonentSet.getString(AllConstants.AbonentsConsts.SERVICES1) + " " +
+                    abonentSet.getString(AllConstants.AbonentsConsts.SERVICES2) + " " +
+                    abonentSet.getString(AllConstants.AbonentsConsts.SERVICES3));
+            list.add(abonent);
+        }
+        return list;
+    }
+
+    private ObservableList<Abonent> getSearchAbonentsList(String query) throws SQLException, ClassNotFoundException {
+        ObservableList<Abonent> list = FXCollections.observableArrayList();
+
+        ResultSet abonentSet = handler.searchAbonent(query);
+        while (abonentSet.next()) {
+            Abonent abonent = new Abonent();
+            abonent.setId(abonentSet.getString(AllConstants.AbonentsConsts.ID));
+            abonent.setFio(abonentSet.getString(AllConstants.AbonentsConsts.FIO));
+            abonent.setContract_num(abonentSet.getString(AllConstants.AbonentsConsts.CONTRACT_NUM));
+            abonent.setPersonal_account(abonentSet.getString(AllConstants.AbonentsConsts.PERSONAL_ACCOUNT));
+            abonent.setServices1(abonentSet.getString(AllConstants.AbonentsConsts.SERVICES1) + " " +
+                    abonentSet.getString(AllConstants.AbonentsConsts.SERVICES2) + " " +
+                    abonentSet.getString(AllConstants.AbonentsConsts.SERVICES3));
+            list.add(abonent);
+        }
+        return list;
+    }
+
+    private ObservableList<Abonent> getNotActiveAbonentsList() throws SQLException, ClassNotFoundException {
+        ObservableList<Abonent> list = FXCollections.observableArrayList();
+        ResultSet abonentSet = handler.getNotActiveAbonentsFromDB();
+        while (abonentSet.next()) {
+            Abonent abonent = new Abonent();
+            abonent.setId(abonentSet.getString(AllConstants.AbonentsConsts.ID));
+            abonent.setFio(abonentSet.getString(AllConstants.AbonentsConsts.FIO));
+            abonent.setContract_num(abonentSet.getString(AllConstants.AbonentsConsts.CONTRACT_NUM));
+            abonent.setPersonal_account(abonentSet.getString(AllConstants.AbonentsConsts.PERSONAL_ACCOUNT));
+            abonent.setServices1(abonentSet.getString(AllConstants.AbonentsConsts.SERVICES1) + " " +
+                    abonentSet.getString(AllConstants.AbonentsConsts.SERVICES2) + " " +
+                    abonentSet.getString(AllConstants.AbonentsConsts.SERVICES3));
+            list.add(abonent);
+        }
+        return list;
+    }
+
     private ObservableList<String> getUsersListCB() throws SQLException, ClassNotFoundException {
         ObservableList<String> list = FXCollections.observableArrayList();
         ResultSet userSet = handler.getUsersFromDB("");
@@ -587,6 +698,17 @@ public class ModuleAbonents {
             User user = new User();
             user.setFio(userSet.getString(AllConstants.UsersConsts.FIO));
             list.add(user.getFio());
+        }
+        return list;
+    }
+
+    private ObservableList<String> getStreetsCB() throws SQLException, ClassNotFoundException {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        ResultSet streetsSet = handler.getStreetsFromDB();
+        while (streetsSet.next()) {
+            list.add(streetsSet.getString(1).split(",")[2] + ", " +
+                    streetsSet.getString(1).split(",")[3].split(" ")[1] + " " +
+                    streetsSet.getString(1).split(",")[3].split(" ")[2]);
         }
         return list;
     }
