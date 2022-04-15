@@ -28,4 +28,12 @@ public class AllConstants {
         public static final String ARENDAINFO = "Информация об аренде";
         public static final String TECH_ID = "Серийный номер оборудования";
     }
+
+    public static class UsersConsts {
+        public static final String USERS_TABLE = "workers";
+
+        public static final String FIO = "ФИО";
+        public static final String WORK = "Работа";
+        public static final String ID = "ID";
+    }
 }

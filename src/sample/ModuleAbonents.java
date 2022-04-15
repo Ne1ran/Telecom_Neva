@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
@@ -268,16 +269,62 @@ public class ModuleAbonents {
     @FXML
     private AnchorPane utilityPane;
 
-    @FXML    void initialize() throws SQLException, ClassNotFoundException {
-        //loadTable();
-        //loadAbonents();
+    @FXML
+    private ImageView userPhotoImg;
+
+    DBHandler handler = new DBHandler();
+    public static PickedUser pickedUser = new PickedUser();
+
+    @FXML
+    void initialize() throws SQLException, ClassNotFoundException {
+        loadUsersCB();
+        loadTable();
+        loadAbonents();
         ObservableList<String> services = FXCollections.observableArrayList("Интернет","Мобильная связь", "Телевидение", "Видеонаблюдение");
         ObservableList<String> servicesStatus = FXCollections.observableArrayList("Новая","Требует выезда", "Закрыта");
-        ObservableList<String> users = FXCollections.observableArrayList("Новая","Требует выезда", "Закрыта");
         ObservableList<String> districts = FXCollections.observableArrayList("Василеостровский","Петроградский","Адмиралтейский");
 
-        userComboB.setItems(users);
         searchDistrictCB.setItems(districts);
+
+        userComboB.setOnAction(ActionEvent ->{
+            String userPicked = userComboB.getValue();
+            try {
+                ResultSet userPickedInDB = handler.getUsersFromDB(userPicked);
+                while (userPickedInDB.next()) {
+                    pickedUser.setFio(userPickedInDB.getString(AllConstants.UsersConsts.FIO));
+                    pickedUser.setWork(userPickedInDB.getString(AllConstants.UsersConsts.WORK));
+                    pickedUser.setId(userPickedInDB.getString(AllConstants.UsersConsts.ID));
+                    System.out.println(pickedUser.getId() + pickedUser.getFio() + pickedUser.getWork());
+                    //userPhotoImg.setImage(new Image("assets/ID1516.jpg"));
+                    changeBecauseOfRole(pickedUser.getWork());
+                }
+            } catch (SQLException | ClassNotFoundException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //Лейбл абонентов
         abonentsLabel.setOnMouseClicked(ActionEvent -> {
@@ -421,14 +468,13 @@ public class ModuleAbonents {
             System.out.println("Попытка добавить оборудование для сетей доступа");
         });
 
-        //Возможно рабочий код, который что-то делает на даблклик в строку таблицы
+        //Рабочий код, который что-то делает на даблклик в строку таблицы
         mainTableView.setRowFactory( tv -> {
             TableRow<Abonent> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                System.out.println("dbclicked");
                 if (event.getClickCount() == 2 ){ // && (!row.isEmpty())
                     Abonent choosenAbonent = row.getItem();
-                    System.out.println(choosenAbonent.getNumber());
+                    System.out.println(choosenAbonent.getFio());
                 }
             });
             return row ;
@@ -497,7 +543,7 @@ public class ModuleAbonents {
         openedLabel.setText("Абоненты ТНС");
     }
 
-    //Ниже все для бд
+    //Ниже все для mainTableView
     private void loadTable() {
         numColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         FIOColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
@@ -512,7 +558,6 @@ public class ModuleAbonents {
     }
 
     private ObservableList<Abonent> getAbonentsList() throws SQLException, ClassNotFoundException {
-        DBHandler handler = new DBHandler();
         ObservableList<Abonent> list = FXCollections.observableArrayList();
         ResultSet abonentSet = handler.getAbonentsFromDB();
         while (abonentSet.next()) {
@@ -527,5 +572,62 @@ public class ModuleAbonents {
             list.add(abonent);
         }
         return list;
+    }
+
+    // Загрузка пользователей в comboBox
+    private void loadUsersCB() throws SQLException, ClassNotFoundException {
+        ObservableList<String> users = getUsersListCB();
+        userComboB.setItems(users);
+    }
+
+    private ObservableList<String> getUsersListCB() throws SQLException, ClassNotFoundException {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        ResultSet userSet = handler.getUsersFromDB("");
+        while (userSet.next()) {
+            User user = new User();
+            user.setFio(userSet.getString(AllConstants.UsersConsts.FIO));
+            list.add(user.getFio());
+        }
+        return list;
+    }
+
+    //Скрываем кнопки в зависимости от работы пользователя
+    public void changeBecauseOfRole(String role){
+        switch (role){
+            case ("Руководитель по работе с клиентами"):
+                abonentsImg.setVisible(true);
+                abonentsLabel.setVisible(true);
+                utilityImg.setVisible(false);
+                utilityLabel.setVisible(false);
+                activesImg.setVisible(false);
+                activesLabel.setVisible(false);
+                billingImg.setVisible(true);
+                billingLabel.setVisible(true);
+                userhelpImg.setVisible(false);
+                usersHelpLabel.setVisible(false);
+                CRMImg.setVisible(true);
+                CRMLabel.setVisible(true);
+                break;
+            case ("Руководитель отдела технической поддержки"):
+
+                break;
+            case ("Специалист ТП (выездной инженер)"):
+
+                break;
+            case ("Директор по развитию"):
+
+                break;
+            case ("Технический департамент"):
+
+                break;
+            case ("Бухгалтер"):
+
+                break;
+            case ("Менеджер по работе с клиентами"):
+
+                break;
+            case (""):
+
+        }
     }
 }

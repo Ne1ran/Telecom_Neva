@@ -12,13 +12,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="535.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ModuleAbonents">
+<AnchorPane prefHeight="535.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ModuleAbonents">
    <children>
-      <ComboBox fx:id="userComboB" layoutX="433.0" layoutY="27.0" prefHeight="25.0" prefWidth="159.0" promptText="ФИО_Пользователя" style="-fx-background-color: lightgray;" />
-      <ImageView fitHeight="35.0" fitWidth="29.0" layoutX="597.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="openedLabel" layoutX="115.0" layoutY="26.0" text="Абоненты ТНС">
+      <ComboBox fx:id="userComboB" layoutX="417.0" layoutY="27.0" prefHeight="25.0" prefWidth="159.0" promptText="ФИО_Пользователя" style="-fx-background-color: lightgray;" />
+      <ImageView fx:id="userPhotoImg" fitHeight="35.0" fitWidth="37.0" layoutX="589.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="openedLabel" layoutX="114.0" layoutY="28.0" text="Абоненты ТНС">
          <font>
-            <Font name="Times New Roman" size="24.0" />
+            <Font name="Times New Roman" size="20.0" />
          </font>
       </Label>
       <AnchorPane fx:id="CRMPane" layoutX="123.0" layoutY="58.0" prefHeight="474.0" prefWidth="488.0" style="visibility: false;">

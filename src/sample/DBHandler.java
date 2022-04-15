@@ -20,6 +20,8 @@ public class DBHandler extends Config{
         return rset;
     }
 
+    //Не нужно
+    /*
     public boolean checkNumber(String number) throws  SQLException, ClassNotFoundException{
         ResultSet rset = null;
         String select = "SELECT numbers FROM dbname WHERE number =?";
@@ -44,6 +46,7 @@ public class DBHandler extends Config{
             return false;
         } else return true;
     }
+    */
 
     public ResultSet getAbonentsFromDB() throws  SQLException, ClassNotFoundException{
         ResultSet rset = null;
@@ -53,6 +56,22 @@ public class DBHandler extends Config{
         rset = prst.executeQuery();
 
         return rset;
+    }
+
+    public ResultSet getUsersFromDB(String FIO) throws  SQLException, ClassNotFoundException{
+        ResultSet rset = null;
+        if (FIO.equals("")) {
+            String select = "SELECT * FROM " + AllConstants.UsersConsts.USERS_TABLE;
+            PreparedStatement prst = getConnection().prepareStatement(select);
+            rset = prst.executeQuery();
+            return rset;
+        } else {
+            String select = "SELECT * FROM " + AllConstants.UsersConsts.USERS_TABLE + " WHERE ФИО =?";
+            PreparedStatement prst = getConnection().prepareStatement(select);
+            prst.setString(1, FIO);
+            rset = prst.executeQuery();
+            return rset;
+        }
     }
 
 }
