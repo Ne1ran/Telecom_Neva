@@ -456,6 +456,7 @@ public class ModuleAbonents {
         abonentsPaysTV.setRowFactory( tv -> {
             TableRow<Debter> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
+                paySendBtn.setVisible(true); //Сюда иф для проверки есть ли задолженность у юзера!
                 if (event.getClickCount() == 2 ){ // && (!row.isEmpty())
                     Debter tempdebt = row.getItem();
                     try {
@@ -472,7 +473,6 @@ public class ModuleAbonents {
                     } catch (SQLException | ClassNotFoundException throwables) {
                         throwables.printStackTrace();
                     }
-                    paySendBtn.setVisible(true); //Сюда иф для проверки есть ли задолженность у юзера!
                 }
             });
             return row ;
