@@ -38,19 +38,19 @@ public class AllConstants {
     }
 
     public static class ServicesConsts {
-        public static final String SERVICES_TABLE = "services";
+        public static final String SERVICES_TABLE = "asks";
 
-        public static final String ID = "Номер заявки";
-        public static final String CREATE_DATE = "Дата создания";
-        public static final String LS = "ЛС";
-        public static final String SERVICE = "Услуга";
-        public static final String SERVICE_TYPE1 = "Вид услуги";
-        public static final String SERVICE_TYPE2 = "Тип услуги";
-        public static final String STATUS = "Статус";
-        public static final String TECH = "Тип оборудования";
-        public static final String TROUBLES = "Описание проблемы";
-        public static final String CLOSE_DATE = "Дата закрытия";
-        public static final String TROUBLE_TYPE = "Тип проблемы";
+        public static final String ID = "`Номер заявки`";
+        public static final String CREATE_DATE = "`Дата создания`";
+        public static final String LS = "`ЛС`";
+        public static final String SERVICE = "`Услуга`";
+        public static final String SERVICE_TYPE1 = "`Вид услуги`";
+        public static final String SERVICE_TYPE2 = "`Тип услуги`";
+        public static final String STATUS = "`Статус`";
+        public static final String TECH = "`Тип оборудования`";
+        public static final String TROUBLES = "`Описание проблемы`";
+        public static final String CLOSE_DATE = "`Дата закрытия`";
+        public static final String TROUBLE_TYPE = "`Тип проблемы`";
     }
 
     public static class OMCConsts {
@@ -86,5 +86,38 @@ public class AllConstants {
         public static final String INTERFACES = "Интерфейсы";
         public static final String DTSpeed = "Скорость";
         public static final String PLACE = "Место расположения";
+    }
+
+    public static class Debters {
+        public static final String DEBT_TABLE = "abonentsrates";
+
+        public static final String LS = "ЛС абонента";
+        public static final String RATE1 = "Тариф абонента";
+        public static final String RATE2 = "Второй тариф";
+    }
+
+    public static class COMB_RATES {
+        public static final String RATE_TABLE = "comb_rates";
+
+        public static final String NAME = "Комбинированный тариф";
+        public static final String PRICE = "Стоимость";
+    }
+
+    public static class RATES {
+        public static final String RATE_TABLE = "rates";
+
+        public static final String NAME = "Название тарифа";
+        public static final String PRICE = "Стоимость, руб/мес";
+    }
+
+    public static class PAYS {
+        public static final String PAYS_TABLE = "abonentspays";
+
+        public static final String DATE = "Дата платежа";
+        public static final String SUM = "Сумма платежа";
+        public static final String BALANCE = "Баланс абонента";
+        public static final String DATE_BALANCE = "Дата баланса";
+        public static final String DEBT = "Задолженность";
+        public static final String ABONENT_ID = "Номер абонента";
     }
 }

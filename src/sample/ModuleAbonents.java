@@ -39,7 +39,7 @@ public class ModuleAbonents {
     @FXML private TextField abonentsNumFieldGen;
     @FXML private TableColumn<Abonent, String> abonentsNumberColumn;
     @FXML private AnchorPane abonentsPane;
-    @FXML private TableView<String> abonentsPaysTV;
+    @FXML private TableView<Debter> abonentsPaysTV;
     @FXML private TextField abonentsSurname;
     @FXML private CheckBox activeCB;
     @FXML private ImageView activesImg;
@@ -69,17 +69,17 @@ public class ModuleAbonents {
     @FXML private TableColumn<Abonent, String> numColumn;
     @FXML private Button openCalcApp;
     @FXML private Label openedLabel;
-    @FXML private TableColumn<Abonent, String> payDebtColumn;
-    @FXML private TableColumn<Abonent, String> payLSColumn;
-    @FXML private TableColumn<Abonent, String> payPackagePriceColumn;
+    @FXML private TableColumn<Debter, String> payDebtColumn;
+    @FXML private TableColumn<Debter, String> payLSColumn;
+    @FXML private TableColumn<Debter, String> payPackagePriceColumn;
     @FXML private Button paySendBtn;
-    @FXML private TableColumn<Abonent, String> payServiceColumn;
-    @FXML private TableColumn<Abonent, String> paysBalanceColumn;
+    @FXML private TableColumn<Debter, String> payServiceColumn;
+    @FXML private TableColumn<History, String> paysBalanceColumn;
     @FXML private Button paysBtn;
-    @FXML private TableColumn<Abonent, String> paysDateColumn;
-    @FXML private TableColumn<Abonent, String> paysDebtColumn;
-    @FXML private TableView<String> paysHistoryTV;
-    @FXML private TableColumn<Abonent, String> paysSumColumn;
+    @FXML private TableColumn<History, String> paysDateColumn;
+    @FXML private TableColumn<History, String> paysDebtColumn;
+    @FXML private TableView<History> paysHistoryTV;
+    @FXML private TableColumn<History, String> paysSumColumn;
     @FXML private TextField problemInfoField;
     @FXML private TextField problemTypeField;
     @FXML private Label profileLabel;
@@ -144,6 +144,7 @@ public class ModuleAbonents {
     public static Abonent pickedAbonent = new Abonent();
     public static Abonent CRMSearchAbonent = new Abonent();
     public static Tech techChosen = new Tech();
+    public static Debter pickedDebter = new Debter();
     Date datenow = new Date();
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -169,6 +170,7 @@ public class ModuleAbonents {
         loadTable();
         loadAbonents();
         loadStreetsCB();
+        loadTechs();
         ObservableList<String> services = FXCollections.observableArrayList("Интернет","Мобильная связь",
                 "Телевидение", "Видеонаблюдение");
         ObservableList<String> servicesStatus = FXCollections.observableArrayList("Новая","Требует выезда",
@@ -384,6 +386,7 @@ public class ModuleAbonents {
                         askCreationTimeField.setText(simpleDateFormat.format(datenow));
                         abonentsLSField.setText(CRMSearchAbonent.getPersonal_account());
                         abonentsNumFieldGen.setText(CRMSearchAbonent.getId());
+                        askNumField.setText(CRMSearchAbonent.getPersonal_account() + "/" + String.join("/" , askCreationTimeField.getText().split("\\.")));
                         serviceCBox.setItems(services);
                         serviceStatusCBox.setItems(servicesStatus);
                     }
@@ -444,17 +447,32 @@ public class ModuleAbonents {
             TableRow<Tech> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 ){ // && (!row.isEmpty())
-
+                    System.out.println("Doubleclick on TTV");
+                    //Открываем окно с информацией об оборудовании
                 }
             });
             return row ;
         });
 
         abonentsPaysTV.setRowFactory( tv -> {
-            TableRow<String> row = new TableRow<>();
+            TableRow<Debter> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 ){ // && (!row.isEmpty())
+                    Debter tempdebt = row.getItem();
+                    try {
+                        ResultSet tempSet = handler.getAbonentIDFromLS(tempdebt.getLs());
+                        if (tempSet.next()){
+                            pickedDebter.setId(tempSet.getString(1));
+                        }
+                    } catch (SQLException | ClassNotFoundException throwables) {
+                        throwables.printStackTrace();
+                    }
                     paysHistoryTV.setVisible(true);
+                    try {
+                        loadHistory(pickedDebter.getId());
+                    } catch (SQLException | ClassNotFoundException throwables) {
+                        throwables.printStackTrace();
+                    }
                     paySendBtn.setVisible(true); //Сюда иф для проверки есть ли задолженность у юзера!
                 }
             });
@@ -473,6 +491,11 @@ public class ModuleAbonents {
             billingPayPane.setVisible(true);
             billingDateCB.setItems(date);
             serviceSearchCB.setItems(type1services);
+            try {
+                loadDebters();
+            } catch (SQLException | ClassNotFoundException throwables) {
+                throwables.printStackTrace();
+            }
         });
         //Бесполезные картинки и лейблы
         /*
@@ -578,8 +601,67 @@ public class ModuleAbonents {
     }
 
     private void loadTechs() throws SQLException, ClassNotFoundException {
+        OAColumn.setCellValueFactory(new PropertyValueFactory<>("Oa"));
+        OSDColumn.setCellValueFactory(new PropertyValueFactory<>("Osd"));
+        OMCColumn.setCellValueFactory(new PropertyValueFactory<>("Omc"));
         ObservableList<Tech> techs = getTechList();
         TechTV.setItems(techs);
+    }
+
+    private void loadDebters() throws SQLException, ClassNotFoundException {
+        payLSColumn.setCellValueFactory(new PropertyValueFactory<>("ls"));
+        payServiceColumn.setCellValueFactory(new PropertyValueFactory<>("rate"));
+        payPackagePriceColumn.setCellValueFactory(new PropertyValueFactory<>("package_price"));
+        payDebtColumn.setCellValueFactory(new PropertyValueFactory<>("debt"));
+        ObservableList<Debter> debters = getDebtList();
+        abonentsPaysTV.setItems(debters);
+    }
+
+    private void loadHistory(String abonentId) throws SQLException, ClassNotFoundException {
+        paysDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        paysSumColumn.setCellValueFactory(new PropertyValueFactory<>("summ"));
+        paysBalanceColumn.setCellValueFactory(new PropertyValueFactory<>("balance"));
+        paysDebtColumn.setCellValueFactory(new PropertyValueFactory<>("debt"));
+        System.out.println(abonentId);
+        ObservableList<History> histories = getHistoryList(abonentId);
+        paysHistoryTV.setItems(histories);
+    }
+
+    private ObservableList<History> getHistoryList(String abonentId) throws SQLException, ClassNotFoundException {
+        ObservableList<History> list = FXCollections.observableArrayList();
+        ResultSet historySet = handler.getHistoryFromDB(abonentId);
+        if (historySet.next()) {
+            History history = new History();
+            history.setDate(historySet.getString(AllConstants.PAYS.DATE));
+            history.setSumm(historySet.getString(AllConstants.PAYS.SUM));
+            history.setBalance(historySet.getString(AllConstants.PAYS.BALANCE));
+            history.setDebt(historySet.getString(AllConstants.PAYS.DEBT));
+            System.out.println(history.getBalance());
+            list.add(history);
+        }
+        return list;
+    }
+
+    private ObservableList<Debter> getDebtList() throws SQLException, ClassNotFoundException {
+        ObservableList<Debter> list = FXCollections.observableArrayList();
+        ResultSet debtSet = handler.getDebterFromDB();
+        while (debtSet.next()) {
+            Debter debt = new Debter();
+            ResultSet tempRSet = handler.getAbonentIDFromLS(debtSet.getString(AllConstants.Debters.LS));
+            if (tempRSet.next()){
+                ResultSet temp2rset = handler.getHistoryFromDB(tempRSet.getString(1));
+                if (temp2rset.next()){
+                    debt.setDebt(temp2rset.getString(AllConstants.PAYS.DEBT));
+                }
+            }
+            debt.setLs(debtSet.getString(AllConstants.Debters.LS));
+            if (!debtSet.getString(AllConstants.Debters.RATE2).equals("")){
+                debt.setRate(debtSet.getString(AllConstants.Debters.RATE1) + " + " + debtSet.getString(AllConstants.Debters.RATE2));
+            } else   debt.setRate(debtSet.getString(AllConstants.Debters.RATE1));
+            debt.setPackage_price("123");
+            list.add(debt);
+        }
+        return list;
     }
 
     private ObservableList<Abonent> getAbonentsList() throws SQLException, ClassNotFoundException {
@@ -604,12 +686,33 @@ public class ModuleAbonents {
         ResultSet OMCList = handler.getOMCFromDB();
         ResultSet OSDList = handler.getOSDFromDB();
         ResultSet OAList = handler.getOAFromDB();
-        while (OMCList.next() || OSDList.next() || OAList.next()) {
-            Tech tech = new Tech();
-            tech.setOMC(OMCList.getString("Серийный номер"));
-            tech.setOSD(OSDList.getString("Серийный номер"));
-            tech.setOA(OAList.getString("Серийный номер"));
-            list.add(tech);
+        boolean OMCHasInfo = true;
+        boolean OSDHasInfo = true;
+        boolean OAHasInfo = true;
+        while (true) {
+            if (OMCHasInfo || OSDHasInfo || OAHasInfo) {
+                Tech tech = new Tech();
+                if (OMCList.next()) {
+                    tech.setOmc(OMCList.getString("Серийный номер"));
+                    System.out.println(tech.getOmc());
+                } else {
+                    tech.setOmc("");
+                    OMCHasInfo = false;
+                }
+                if (OSDList.next()) {
+                    tech.setOsd(OSDList.getString("Серийный номер"));
+                } else {
+                    tech.setOsd("");
+                    OSDHasInfo = false;
+                }
+                if (OAList.next()) {
+                    tech.setOa(OAList.getString("Серийный номер"));
+                } else {
+                    tech.setOa("");
+                    OAHasInfo = false;
+                }
+                list.add(tech);
+            } else break;
         }
         return list;
     }
@@ -717,19 +820,6 @@ public class ModuleAbonents {
                 CRMLabel.setVisible(true);
                 break;
             case ("Руководитель отдела технической поддержки"):
-                abonentsImg.setVisible(true);
-                abonentsLabel.setVisible(true);
-                utilityImg.setVisible(true);
-                utilityLabel.setVisible(true);
-                activesImg.setVisible(false);
-                activesLabel.setVisible(false);
-                billingImg.setVisible(false);
-                billingLabel.setVisible(false);
-                userhelpImg.setVisible(true);
-                usersHelpLabel.setVisible(true);
-                CRMImg.setVisible(true);
-                CRMLabel.setVisible(true);
-                break;
             case ("Специалист ТП (выездной инженер)"):
                 abonentsImg.setVisible(true);
                 abonentsLabel.setVisible(true);

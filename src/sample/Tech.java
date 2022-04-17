@@ -1,43 +1,34 @@
 package sample;
 
 public class Tech {
-    private String ID;
-    private String OMC;
-    private String OSD;
-    private String OA;
+    private String Omc;
+    private String Osd;
+    private String Oa;
 
     public Tech() {
     }
 
-    public String getID() {
-        return ID;
+    public String getOmc() {
+        return Omc;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setOmc(String Omc) {
+        this.Omc = Omc;
     }
 
-    public String getOMC() {
-        return OMC;
+    public String getOsd() {
+        return Osd;
     }
 
-    public void setOMC(String OMC) {
-        this.OMC = OMC;
+    public void setOsd(String Osd) {
+        this.Osd = Osd;
     }
 
-    public String getOSD() {
-        return OSD;
+    public String getOa() {
+        return Oa;
     }
 
-    public void setOSD(String OSD) {
-        this.OSD = OSD;
-    }
-
-    public String getOA() {
-        return OA;
-    }
-
-    public void setOA(String OA) {
-        this.OA = OA;
+    public void setOa(String Oa) {
+        this.Oa = Oa;
     }
 }
