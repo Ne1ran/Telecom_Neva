@@ -36,4 +36,55 @@ public class AllConstants {
         public static final String WORK = "Работа";
         public static final String ID = "ID";
     }
+
+    public static class ServicesConsts {
+        public static final String SERVICES_TABLE = "services";
+
+        public static final String ID = "Номер заявки";
+        public static final String CREATE_DATE = "Дата создания";
+        public static final String LS = "ЛС";
+        public static final String SERVICE = "Услуга";
+        public static final String SERVICE_TYPE1 = "Вид услуги";
+        public static final String SERVICE_TYPE2 = "Тип услуги";
+        public static final String STATUS = "Статус";
+        public static final String TECH = "Тип оборудования";
+        public static final String TROUBLES = "Описание проблемы";
+        public static final String CLOSE_DATE = "Дата закрытия";
+        public static final String TROUBLE_TYPE = "Тип проблемы";
+    }
+
+    public static class OMCConsts {
+        public static final String OMC_TABLE = "OMC";
+
+        public static final String ID = "Серийный номер";
+        public static final String NAME = "Название";
+        public static final String RATE = "Частота";
+        public static final String COEFF_FADE = "Коэффициент затухания";
+        public static final String DTT = "Технология передачи данных";
+        public static final String PLACE = "Расположение";
+    }
+
+    public static class OAConsts {
+        public static final String OA_TABLE = "OA";
+
+        public static final String ID = "Серийный номер";
+        public static final String NAME = "Наименование";
+        public static final String PORTS_NAME = "Порты";
+        public static final String DTS = "Стандарт передачи";
+        public static final String DTSpeed = "Скорость";
+        public static final String PLACE = "Адрес абонента";
+    }
+
+    public static class OSDConsts {
+        public static final String OSD_TABLE = "OSD";
+
+        public static final String ID = "Серийный номер";
+        public static final String NAME = "Наименование";
+        public static final String PORTS_NUM = "Количество портов";
+        public static final String DTS = "Стандарт передачи данных ";
+        public static final String RATE = "Частота";
+        public static final String INTERFACES = "Интерфейсы";
+        public static final String DTSpeed = "Скорость";
+        public static final String PLACE = "Место расположения";
+    }
 }

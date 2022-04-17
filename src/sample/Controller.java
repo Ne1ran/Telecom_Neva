@@ -110,6 +110,7 @@ public class Controller {
                             @Override
                             public void run() {
                                 time++;
+                                timeLabel.setText(Integer.toString(10 - time));
                                 if (time >= 10){
                                     System.out.println("Теперь вы можете вновь запросить код!");
                                     time = 0;
