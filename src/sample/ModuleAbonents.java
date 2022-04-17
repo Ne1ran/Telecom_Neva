@@ -629,7 +629,7 @@ public class ModuleAbonents {
     private ObservableList<History> getHistoryList(String abonentId) throws SQLException, ClassNotFoundException {
         ObservableList<History> list = FXCollections.observableArrayList();
         ResultSet historySet = handler.getHistoryFromDB(abonentId);
-        if (historySet.next()) {
+        while (historySet.next()) {
             History history = new History();
             history.setDate(historySet.getString(AllConstants.PAYS.DATE));
             history.setSumm(historySet.getString(AllConstants.PAYS.SUM));
@@ -643,12 +643,20 @@ public class ModuleAbonents {
     private ObservableList<Debter> getDebtList() throws SQLException, ClassNotFoundException {
         ObservableList<Debter> list = FXCollections.observableArrayList();
         ResultSet debtSet = handler.getDebterFromDB();
+        String simpleRates = "Стандарт " + "Оптима " + "Супер " + "Базовый " + "Базовый Плюс " +
+                "Оптимальный " + "Оптимальный Плюс " + "Чуть-чуть смотри " + "Побольше смотри " +
+                "Много смотри " + "Смотри и овощи " + "Никому не звони " + "Звони только маме " +
+                "Звони родным " + "Болтай без умолку";
+        String comboRates = "Активный " + "Позитивный " + "Космический";
+        ResultSet rset1 = null;
+        ResultSet rset2 = null;
+        String price = "";
         while (debtSet.next()) {
             Debter debt = new Debter();
             ResultSet tempRSet = handler.getAbonentIDFromLS(debtSet.getString(AllConstants.Debters.LS));
             if (tempRSet.next()){
                 ResultSet temp2rset = handler.getHistoryFromDB(tempRSet.getString(1));
-                if (temp2rset.next()){
+                while (temp2rset.next()){
                     debt.setDebt(temp2rset.getString(AllConstants.PAYS.DEBT));
                 }
             }
@@ -656,7 +664,30 @@ public class ModuleAbonents {
             if (!debtSet.getString(AllConstants.Debters.RATE2).equals("")){
                 debt.setRate(debtSet.getString(AllConstants.Debters.RATE1) + " + " + debtSet.getString(AllConstants.Debters.RATE2));
             } else   debt.setRate(debtSet.getString(AllConstants.Debters.RATE1));
-            debt.setPackage_price("123");
+            if (!debtSet.getString(AllConstants.Debters.RATE2).equals("")){
+                if (simpleRates.contains(debtSet.getString(AllConstants.Debters.RATE1))){
+                    rset1 = handler.searchRate(debtSet.getString(AllConstants.Debters.RATE1));
+                    rset2 = handler.searchRate(debtSet.getString(AllConstants.Debters.RATE2));
+                } else {
+                    rset1 = handler.searchRateComb(debtSet.getString(AllConstants.Debters.RATE1));
+                    rset2 = handler.searchRate(debtSet.getString(AllConstants.Debters.RATE2));
+                }
+            } else {
+                if (simpleRates.contains(debtSet.getString(AllConstants.Debters.RATE1))){
+                    rset1 = handler.searchRate(debtSet.getString(AllConstants.Debters.RATE1));
+                } else {
+                    rset1 = handler.searchRateComb(debtSet.getString(AllConstants.Debters.RATE1));
+                }
+            }
+            if (rset1.next()){
+                if (rset2.next()){
+                    price += Float.toString(Float.parseFloat(rset1.getString(1).split(" ")[0])
+                            + Float.parseFloat(String.join(".", rset2.getString(1).split(","))));
+                } else price += Float.toString(Float.parseFloat(String.join(".",
+                        rset1.getString(1).split(" ")[0].split(","))));
+            }
+            debt.setPackage_price(price);
+            price = "";
             list.add(debt);
         }
         return list;

@@ -89,6 +89,28 @@ public class DBHandler extends Config{
         return rset;
     }
 
+    public ResultSet searchRateComb(String rate) throws  SQLException, ClassNotFoundException{
+        ResultSet rset = null;
+        String select = "SELECT Стоимость FROM " + AllConstants.COMB_RATES.RATE_TABLE
+                + " where `Комбинированный тариф` = '" + rate + "'";
+
+        PreparedStatement prst = getConnection().prepareStatement(select);
+        rset = prst.executeQuery();
+
+        return rset;
+    }
+
+    public ResultSet searchRate(String rate) throws  SQLException, ClassNotFoundException{
+        ResultSet rset = null;
+        String select = "SELECT `Стоимость, руб/мес` FROM " + AllConstants.RATES.RATE_TABLE
+                + " where `Название тарифа` = '" + rate + "'";
+
+        PreparedStatement prst = getConnection().prepareStatement(select);
+        rset = prst.executeQuery();
+
+        return rset;
+    }
+
     public ResultSet getUsersFromDB(String FIO) throws  SQLException, ClassNotFoundException{
         ResultSet rset = null;
         if (FIO.equals("")) {
