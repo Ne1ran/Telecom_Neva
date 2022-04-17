@@ -130,7 +130,6 @@ public class DBHandler extends Config{
         ResultSet rset = null;
         String select = "SELECT * FROM " + AllConstants.AbonentsConsts.ABONENTS_TABLE
                 + " WHERE `Номер абонента` = '" + abonentID + "'";
-        System.out.println(select);
         PreparedStatement prst = getConnection().prepareStatement(select);
         rset = prst.executeQuery();
         return rset;
@@ -147,7 +146,6 @@ public class DBHandler extends Config{
     public ResultSet getHistoryFromDB(String abonentId) throws  SQLException, ClassNotFoundException {
         ResultSet rset = null;
         String select = "SELECT * FROM " + AllConstants.PAYS.PAYS_TABLE + " WHERE `Номер абонента` = '" + abonentId + "'";
-        System.out.println(select);
         PreparedStatement prst = getConnection().prepareStatement(select);
         rset = prst.executeQuery();
         return rset;
@@ -192,7 +190,6 @@ public class DBHandler extends Config{
                 AllConstants.ServicesConsts.STATUS + ',' + AllConstants.ServicesConsts.TECH + ',' +
                 AllConstants.ServicesConsts.TROUBLES + ',' + AllConstants.ServicesConsts.CLOSE_DATE + ','
                 + AllConstants.ServicesConsts.TROUBLE_TYPE + ')' + "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-        System.out.println(insert);
         PreparedStatement prst = getConnection().prepareStatement(insert);
         prst.setString(1, service.getId());
         prst.setString(2, service.getDateCreation());

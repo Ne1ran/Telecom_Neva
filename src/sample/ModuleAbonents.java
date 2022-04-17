@@ -189,7 +189,6 @@ public class ModuleAbonents {
                     pickedUser.setFio(userPickedInDB.getString(AllConstants.UsersConsts.FIO));
                     pickedUser.setWork(userPickedInDB.getString(AllConstants.UsersConsts.WORK));
                     pickedUser.setId(userPickedInDB.getString(AllConstants.UsersConsts.ID));
-                    System.out.println(pickedUser.getId() + pickedUser.getFio() + pickedUser.getWork());
                     //userPhotoImg.setImage(new Image("assets/ID1516.jpg"));
                     changeBecauseOfRole(pickedUser.getWork());
                 }
@@ -636,7 +635,6 @@ public class ModuleAbonents {
             history.setSumm(historySet.getString(AllConstants.PAYS.SUM));
             history.setBalance(historySet.getString(AllConstants.PAYS.BALANCE));
             history.setDebt(historySet.getString(AllConstants.PAYS.DEBT));
-            System.out.println(history.getBalance());
             list.add(history);
         }
         return list;
@@ -694,7 +692,6 @@ public class ModuleAbonents {
                 Tech tech = new Tech();
                 if (OMCList.next()) {
                     tech.setOmc(OMCList.getString("Серийный номер"));
-                    System.out.println(tech.getOmc());
                 } else {
                     tech.setOmc("");
                     OMCHasInfo = false;
